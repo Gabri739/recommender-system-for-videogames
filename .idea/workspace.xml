@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="Commit Initial più modifiche">
-      <change beforePath="$PROJECT_DIR$/.idea/recommender-system-for-videogames.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/recommender-system-for-videogames.iml" afterDir="false" />
+    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="pytorch + embedding fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-exploration.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data-exploration.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vector-search.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/vector-search.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,8 +82,17 @@
       <workItem from="1758912541948" duration="1143000" />
       <workItem from="1758959384378" duration="930000" />
       <workItem from="1758969180184" duration="5981000" />
-      <workItem from="1758976912434" duration="1340000" />
+      <workItem from="1758976912434" duration="3039000" />
     </task>
+    <task id="LOCAL-00001" summary="pytorch + embedding fix">
+      <option name="closed" value="true" />
+      <created>1758978302531</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1758978302531</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,5 +108,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="pytorch + embedding fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="pytorch + embedding fix" />
   </component>
 </project>
