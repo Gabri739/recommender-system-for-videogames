@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="pytorch + embedding fix">
+    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="modified embeddings for saving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-exploration.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data-exploration.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vector-search.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/vector-search.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +83,8 @@
       <workItem from="1758912541948" duration="1143000" />
       <workItem from="1758959384378" duration="930000" />
       <workItem from="1758969180184" duration="5981000" />
-      <workItem from="1758976912434" duration="3039000" />
+      <workItem from="1758976912434" duration="8891000" />
+      <workItem from="1759052836101" duration="352000" />
     </task>
     <task id="LOCAL-00001" summary="pytorch + embedding fix">
       <option name="closed" value="true" />
@@ -92,7 +94,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758978302531</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="modified embeddings for saving">
+      <option name="closed" value="true" />
+      <created>1758980245761</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758980245761</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,6 +121,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pytorch + embedding fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="pytorch + embedding fix" />
+    <MESSAGE value="modified embeddings for saving" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified embeddings for saving" />
   </component>
 </project>
