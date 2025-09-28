@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="modified embeddings for saving">
+    <list default="true" id="ff84ebff-e542-40f4-9f99-ff8862acd159" name="Changes" comment="minor changes">
+      <change afterPath="$PROJECT_DIR$/ui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data-exploration.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/data-exploration.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vector-search.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/vector-search.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +17,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jupyter Notebook" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -84,7 +84,7 @@
       <workItem from="1758959384378" duration="930000" />
       <workItem from="1758969180184" duration="5981000" />
       <workItem from="1758976912434" duration="8891000" />
-      <workItem from="1759052836101" duration="352000" />
+      <workItem from="1759052836101" duration="1332000" />
     </task>
     <task id="LOCAL-00001" summary="pytorch + embedding fix">
       <option name="closed" value="true" />
@@ -102,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758980245761</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1759053438410</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1759053438411</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +130,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pytorch + embedding fix" />
     <MESSAGE value="modified embeddings for saving" />
-    <option name="LAST_COMMIT_MESSAGE" value="modified embeddings for saving" />
+    <MESSAGE value="minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor changes" />
   </component>
 </project>
