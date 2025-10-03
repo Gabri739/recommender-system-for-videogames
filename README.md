@@ -8,6 +8,7 @@ Il sistema si basa sul concetto di **similarità tra videogiochi**, costruito co
 - **Numero totale di recensioni** (come indicatore di popolarità e analisi sociale)
 
 Il database su cui si fonda il progetto è disponibile su Kaggle al seguente link:  https://www.kaggle.com/datasets/artermiloff/steam-games-dataset
+
 In particolare il file usato è: games_march2025_cleaned.csv
 
 ## Metodo di raccomandazione
