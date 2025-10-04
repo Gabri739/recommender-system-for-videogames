@@ -1,82 +1,152 @@
 import gradio as gr
-import pandas as pd
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 
-games = pd.read_csv("games_cleaned.csv", index_col="appid")
-games["max_cover"] = games["header_image"]
-titles = games["name"].to_dict()
+#import per la logica della raccomandazione
+from recommender_logic import search_games as search_games_recommender
+from recommender_logic import get_recommendations
 
-embeddings = np.load("embeddings.npy")
-appids = np.load("appids.npy")
 
-# Funzione di raccomandazione
-def recommend_from_multiple_ui(user_games, top_k=5):
+
+#funzione cha chiama la funzione nel back end per trovare i giochi
+def search_games(query):
+
+    matches = search_games_recommender(query, max_results=50)
+
+    if matches:
+        return gr.update(choices=matches, visible=True, value=None)
+    else:
+        return gr.update(choices=[], visible=False, value=None)
+
+
+#aggiunge il game ai game già selezionati
+def add_game_to_list(selected_game, current_list):
+
+    if not selected_game or selected_game == "":
+        return current_list, "", gr.update(visible=False, value=None)
+
+    if selected_game not in current_list:
+        current_list.append(selected_game)
+
+    # Reset del campo di ricerca
+    return current_list, "", gr.update(visible=False, value=None)
+
+
+#chiamata della funzione di raccomandazione presente nel back end
+def recommend_from_multiple_ui(user_games):
+
     if not user_games:
-        return [], gr.update(visible=False)
+        return [], gr.update(visible=False), gr.update(
+            visible=True,
+            value="⚠️ Seleziona almeno un gioco per ricevere raccomandazioni!"
+        )
 
-    # Converti titoli selezionati -> appid
-    user_appids = []
-    for t in user_games:
-        found = [k for k, v in titles.items() if v.lower() == t.lower()]
-        if found:
-            user_appids.append(found[0])
+    try:
+        results = get_recommendations(user_games, top_k=5)
+        return results, gr.update(visible=True), gr.update(visible=False)
 
-    if not user_appids:
-        return [], gr.update(visible=False)
+    except ValueError as e:
+        error_msg = f"⚠️ {str(e)}"
+        return [], gr.update(visible=False), gr.update(visible=True, value=error_msg)
 
-    # Profilo utente = media degli embedding
-    idxs = [np.where(appids == a)[0][0] for a in user_appids]
-    user_profile = np.mean([embeddings[i] for i in idxs], axis=0)
-
-    sims = cosine_similarity([user_profile], embeddings)[0]
-    ranking = np.argsort(sims)[::-1]
-
-    exclude = set(user_appids)
-    results = [
-        (games.loc[appids[i], "max_cover"], f"{titles[appids[i]]} — {sims[i]:.2f}")
-        for i in ranking if appids[i] not in exclude
-    ][:top_k]
-
-    # Se ci sono risultati, rendi la gallery visibile
-    return results, gr.update(visible=bool(results))
+    except Exception as e:
+        error_msg = f"❌ Errore durante il calcolo: {str(e)}"
+        print(error_msg)
+        return [], gr.update(visible=False), gr.update(visible=True, value=error_msg)
 
 
+# CSS inline per font uniforme per tutta la pagina di Gradio
+custom_css = """
+body, body *, input, textarea, select, button, label, .label, option, 
+.markdown-text, .prose, p, h1, h2, h3, h4, h5, h6, span, div {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;}"""
 
 # Interfaccia Gradio
-
-choices = list(titles.values())
-
-with gr.Blocks() as demo:
-    gr.Markdown("# 🎮 Game Recommender")
-    gr.Markdown("### In questa pagina avrai a disposizione un sistema di raccomandazione dove, inserendo i giochi a cui hai giocato, otterrai 5 giochi che potrebbero interessarti!")
-    gr.Markdown("### 💡 Pro Tip: più ne inserisci più i suggerimenti sono accurati!")
-
-    # Dropdown searchable di default
-    user_input = gr.Dropdown(
-        choices=choices,
-        multiselect=True,
-        label="Inserisci i giochi che hai giocato e ti sono piaciuti:"
+with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
+    gr.Markdown("# 🎮 Game Recommender System")
+    gr.Markdown(
+        "Cerca e seleziona i giochi che hai giocato e ti sono piaciuti per ricevere 5 raccomandazioni personalizzate."
     )
 
-    # Bottone raccomandazioni
-    recommend_btn = gr.Button("Cerca giochi adatti a me!")
+    with gr.Row():
+        gr.Markdown("### 💡 **Pro Tip**: Più giochi inserisci, più accurate saranno le raccomandazioni!")
 
-    # Gallery dei consigliaiti
+    with gr.Row():
+        with gr.Column(scale=4):
+            search_input = gr.Textbox(
+                label="Cerca un gioco",
+                placeholder="Digita almeno 2 lettere per cercare...",
+                interactive=True
+            )
+            search_results = gr.Radio(
+                choices=[],
+                label="Risultati della ricerca",
+                visible=False,
+                interactive=True
+            )
+
+    # Lista giochi selezionati
+    selected_games = gr.State([])
+
+    games_display = gr.Dropdown(
+        choices=[],
+        multiselect=True,
+        label="✅ Giochi selezionati (deseleziona per rimuovere)",
+        info="I tuoi giochi preferiti appariranno qui",
+        interactive=True
+    )
+
+    # Aggiorna i risultati mentre digiti
+    search_input.change(
+        fn=search_games,
+        inputs=search_input,
+        outputs=search_results
+    )
+
+    # Aggiungi cliccando direttamente su un risultato
+    search_results.change(
+        fn=add_game_to_list,
+        inputs=[search_results, selected_games],
+        outputs=[selected_games, search_input, search_results]
+    ).then(
+        fn=lambda x: gr.update(choices=x, value=x),
+        inputs=selected_games,
+        outputs=games_display
+    )
+
+    # Rimuovi gioco dalla lista quando viene deselezionato
+    games_display.change(
+        fn=lambda x: x,
+        inputs=games_display,
+        outputs=selected_games
+    )
+
+    recommend_btn = gr.Button("Trova giochi per me!", variant="primary", size="lg")
+
+    # Messaggio di errore/info
+    info_msg = gr.Markdown(visible=False)
+
     rec_gallery = gr.Gallery(
-        label="Ti potrebbero piacere",
+        label="Ti potrebbero piacere questi giochi",
         columns=5,
         rows=1,
         height="auto",
         show_label=True,
-        visible=False
+        visible=False,
+        object_fit="cover"
     )
 
-    # Evento click
+    gr.Markdown(
+        "---\n"
+        "**Come funziona?**\n"
+        "1. Cerca un gioco digitando il nome nella casella di ricerca\n"
+        "2. Seleziona il gioco dai risultati che appaiono\n"
+        "3. Aggiungi i giochi che ti piacciono\n"
+        "4. Clicca su 'Trova giochi per me!' per ricevere raccomandazioni personalizzate"
+    )
+
     recommend_btn.click(
         fn=recommend_from_multiple_ui,
-        inputs=user_input,
-        outputs=[rec_gallery, rec_gallery]
+        inputs=selected_games,
+        outputs=[rec_gallery, rec_gallery, info_msg]
     )
 
 if __name__ == "__main__":
